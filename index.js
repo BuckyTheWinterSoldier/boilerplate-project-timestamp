@@ -25,20 +25,20 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
-app.get("/api/:date",(request,response)=>{
+app.get("/api/:date?",(request,response)=>{
   let {date}=request.params;
   try{
   if(date%date===0){
     let unixdateTime=parseInt(date);
-  response.send({
-    "unix":unixdateTime, "utc01":new Date(unixdateTime).toUTCString()
+  response.json({
+    unix:unixdateTime, utc:new Date(unixdateTime).toUTCString()
   })}
  else{
   let unixdateTime=Date.parse(date);
   dateTime=new Date(unixdateTime);
 
-  response.send({
-    "unix":unixdateTime, "utc":dateTime
+  response.json({
+    unix:unixdateTime, utc:dateTime
   })}
 }
 catch(error){
