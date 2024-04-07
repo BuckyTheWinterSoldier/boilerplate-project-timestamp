@@ -8,6 +8,7 @@ var app = express();
 // enable CORS (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
 // so that your API is remotely testable by FCC 
 var cors = require('cors');
+const res = require('express/lib/response');
 app.use(cors({optionsSuccessStatus: 200}));  // some legacy browsers choke on 204
 
 // http://expressjs.com/en/starter/static-files.html
@@ -24,6 +25,28 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
+app.get("/api/:date",(request,response)=>{
+  let {date}=request.params;
+  try{
+  if(date%date===0){
+    let dateTime=new Date(date);
+    console.log(Date.parse(date));
+    console.log(dateTime);
+  response.send({
+    "unix":date, "utc01":dateTime
+  })}
+ else{
+  let unixdateTime=Date.parse(date);
+  dateTime=new Date(unixdateTime);
+
+  response.send({
+    "unix":unixdateTime, "utc":dateTime
+  })}
+}
+catch(error){
+  response.send({"error" : "Invalid Date"})
+}
+})
 
 
 // Listen on port set in environment variable or default to 3000
