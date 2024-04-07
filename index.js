@@ -29,11 +29,9 @@ app.get("/api/:date",(request,response)=>{
   let {date}=request.params;
   try{
   if(date%date===0){
-    let dateTime=new Date(date);
-    console.log(Date.parse(date));
-    console.log(dateTime);
+    let unixdateTime=parseInt(date);
   response.send({
-    "unix":date, "utc01":dateTime
+    "unix":unixdateTime, "utc01":new Date(unixdateTime).toUTCString()
   })}
  else{
   let unixdateTime=Date.parse(date);
